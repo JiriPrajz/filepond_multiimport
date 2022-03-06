@@ -24,6 +24,5 @@ jobs:
       id: docker_build
       uses: docker/build-push-action@v2
       with:
-        working-directory: ./docker_builder
         push: true
         tags: cistic/multiimport:master-latest
