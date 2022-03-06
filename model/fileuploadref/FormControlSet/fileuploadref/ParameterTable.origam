@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<x:file xmlns:x="http://schemas.origam.com/model-persistence/1.0.0" xmlns:asi="http://schemas.origam.com/Origam.Schema.AbstractSchemaItem/6.0.0" xmlns:acs="http://schemas.origam.com/Origam.Schema.GuiModel.AbstractControlSet/6.0.0" xmlns:apvi="http://schemas.origam.com/Origam.Schema.GuiModel.AbstractPropertyValueItem/6.0.0" xmlns:csi="http://schemas.origam.com/Origam.Schema.GuiModel.ControlSetItem/6.0.0" xmlns:fcs="http://schemas.origam.com/Origam.Schema.GuiModel.FormControlSet/6.0.0" xmlns:pvi="http://schemas.origam.com/Origam.Schema.GuiModel.PropertyValueItem/6.0.0">
+  <fcs:FormControlSet
+    asi:abstract="false"
+    fcs:dataStructure="fileuploadref/DataStructure/fileuploadref/ParameterTable.origam#ParameterTable/2326f711-e633-4ec5-b4c1-fcd5f717ff9c"
+    x:id="99528c45-8f3f-4843-9bcf-abe227d1bbf1"
+    asi:name="ParameterTable">
+    <csi:ControlSetItem
+      asi:abstract="false"
+      x:id="7e404f0c-cc26-4cd0-b1a0-b297aa1e1ba6"
+      csi:isAlternative="false"
+      csi:level="100"
+      asi:name="ParameterTableRootControl"
+      csi:requestSaveAfterChange="false"
+      csi:widget="Root/Control/_Basic Controls/AsForm.origam#AsForm/ff32a695-c533-4262-87d6-e4cd4451e2c9">
+      <csi:ControlSetItem
+        asi:abstract="false"
+        x:id="a63c1716-b831-491e-ba79-66124257d5ec"
+        csi:isAlternative="false"
+        csi:level="100"
+        asi:name="FileUploadSectionPlugin"
+        csi:requestSaveAfterChange="false"
+        csi:widget="fileuploadref/Control/_Basic Controls/FileUploadSectionPlugin.origam#FileUploadSectionPlugin/497b6edc-f3e5-46fc-853f-85ef8e9ebbfb">
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="b33d277c-eae5-46e5-8f6d-5632ef54fdc4"
+          asi:name="AllowNavigation"
+          apvi:propertyId="9216622f-c8b5-4ab1-8ed0-c7cacd18133d"
+          pvi:value="true" />
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="03664d4c-54c4-40fb-a0bb-9a7187b5fe74"
+          asi:name="ApiUrl"
+          apvi:propertyId="45cfd6f8-62cd-4ce5-9729-39b7909b3588"
+          pvi:value="api/private/Importfp" />
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="da1bd37f-5dfe-4190-90bb-a9704a4e13d3"
+          asi:name="DataMember"
+          apvi:propertyId="c96b11eb-6a1f-4a3e-8bea-860a400aeb3d"
+          pvi:value="ParameterTable" />
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="a209bb4c-4d52-459e-8d9a-05b9b047f07e"
+          asi:name="FilterFileType"
+          apvi:propertyId="807b709c-081f-43ad-b944-0e019acc0c26" />
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="6b88ad9e-2b9e-444f-8a00-0d2569781884"
+          asi:name="Height"
+          apvi:propertyId="49e86ab1-c813-4e17-aadc-7fe10f9a12af"
+          pvi:value="227" />
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="04067750-32e2-4a51-b5ad-963d648b4a9c"
+          asi:name="InstantUpload"
+          apvi:propertyId="49ed5469-ff37-4a2c-971a-6eb81869a9f4"
+          pvi:value="true" />
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="d405844d-9f14-4b76-98bf-dd4d369fee7b"
+          asi:name="InvalidFileTypeMessage"
+          apvi:propertyId="062ba153-84b4-4aa6-b201-f7dfdcf2ec75" />
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="33743970-98a0-46b2-b957-6083bbac9a6b"
+          asi:name="Left"
+          apvi:propertyId="9ae14462-5434-46cf-9481-be76f91f24da"
+          pvi:value="12" />
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="a93acd01-9685-44c3-b3fb-acadceb92eb9"
+          asi:name="MaxParallelUploads"
+          apvi:propertyId="f861d62b-c2ea-491d-bc9b-b34cf4a7f83e"
+          pvi:value="2" />
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="28856929-78fd-4c3b-9951-12b852f2033f"
+          asi:name="TabIndex"
+          apvi:propertyId="284544ef-1b84-4252-84c3-b934b0801667"
+          pvi:value="0" />
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="ca6d61e4-d164-4260-b148-52adb292e18e"
+          asi:name="Text"
+          apvi:propertyId="bba4f5e3-0857-4a42-b066-377903dfd793"
+          pvi:value="FileUploadSectionPlugin" />
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="fe614c6b-218e-4e93-b56d-852f830fc3c5"
+          asi:name="Top"
+          apvi:propertyId="a144bc5b-2d60-46d9-a603-5fd63cc62327"
+          pvi:value="9" />
+        <pvi:PropertyValueItem
+          asi:abstract="false"
+          x:id="3f86da7f-2aa3-4381-90fe-656fc480445d"
+          asi:name="Width"
+          apvi:propertyId="156ee734-2ab4-4a47-b4c0-4109bdc3e7b9"
+          pvi:value="643" />
+      </csi:ControlSetItem>
+      <pvi:PropertyValueItem
+        asi:abstract="false"
+        x:id="fe38650b-61c7-4dab-b9b4-fe99a0f6df46"
+        asi:name="ExtraControlBindings"
+        apvi:propertyId="3cd32bca-fad9-49b4-8641-3ff4e77e567a"
+        pvi:value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;string&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&amp;gt;&#xD;&#xA;&amp;lt;ComponentBindings xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; /&amp;gt;&lt;/string&gt;" />
+      <pvi:PropertyValueItem
+        asi:abstract="false"
+        x:id="5f3f4e7b-2e77-48d1-85fb-753e7145a73d"
+        asi:name="Height"
+        apvi:propertyId="3ec90be1-7cc2-481d-aed3-85505560eb70"
+        pvi:value="284" />
+      <pvi:PropertyValueItem
+        asi:abstract="false"
+        x:id="62b7bc61-7f4f-4c46-b464-55a6a95d4c50"
+        asi:name="Left"
+        apvi:propertyId="fde5e452-b2a4-4f38-968a-29e20625b699"
+        pvi:value="15" />
+      <pvi:PropertyValueItem
+        asi:abstract="false"
+        x:id="20a2a63b-4932-448c-884e-ba477ed3d055"
+        asi:name="Top"
+        apvi:propertyId="2d33a742-193c-42b2-8a21-c8c6ccedfd6c"
+        pvi:value="15" />
+      <pvi:PropertyValueItem
+        asi:abstract="false"
+        x:id="b31bdea3-d724-4b2d-ba7b-80d15da019b5"
+        asi:name="Width"
+        apvi:propertyId="99f5687f-be11-49ec-a2eb-fba58d945b3e"
+        pvi:value="691" />
+    </csi:ControlSetItem>
+  </fcs:FormControlSet>
+</x:file>

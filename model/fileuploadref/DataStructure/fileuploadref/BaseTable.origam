@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<x:file xmlns:x="http://schemas.origam.com/model-persistence/1.0.0" xmlns:asi="http://schemas.origam.com/Origam.Schema.AbstractSchemaItem/6.0.0" xmlns:ads="http://schemas.origam.com/Origam.Schema.EntityModel.AbstractDataStructure/6.0.0" xmlns:ds="http://schemas.origam.com/Origam.Schema.EntityModel.DataStructure/6.0.0" xmlns:dse="http://schemas.origam.com/Origam.Schema.EntityModel.DataStructureEntity/6.0.0">
+  <ds:DataStructure
+    asi:abstract="false"
+    x:id="cf545f4f-f701-4393-b97b-f8e0da7cc2b5"
+    ds:localized="false"
+    asi:name="BaseTable">
+    <dse:DataStructureEntity
+      asi:abstract="false"
+      dse:allFields="true"
+      dse:concurrencyHandling="Standard"
+      dse:entity="fileuploadref/DataEntity/fileuploadref/BaseTable.origam#BaseTable/70cd8678-cfef-42ac-a001-f3b35fe38b34"
+      x:id="8c048c85-a789-48fa-b1c3-9a91c2264b9d"
+      dse:ignoreCondition="None"
+      dse:ignoreImplicitFilters="false"
+      asi:name="BaseTable"
+      dse:relationType="Normal"
+      dse:useUpsert="false" />
+  </ds:DataStructure>
+</x:file>

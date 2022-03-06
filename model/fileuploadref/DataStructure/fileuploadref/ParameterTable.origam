@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<x:file xmlns:x="http://schemas.origam.com/model-persistence/1.0.0" xmlns:asi="http://schemas.origam.com/Origam.Schema.AbstractSchemaItem/6.0.0" xmlns:ads="http://schemas.origam.com/Origam.Schema.EntityModel.AbstractDataStructure/6.0.0" xmlns:ds="http://schemas.origam.com/Origam.Schema.EntityModel.DataStructure/6.0.0" xmlns:dse="http://schemas.origam.com/Origam.Schema.EntityModel.DataStructureEntity/6.0.0">
+  <ds:DataStructure
+    asi:abstract="false"
+    x:id="2326f711-e633-4ec5-b4c1-fcd5f717ff9c"
+    ds:localized="false"
+    asi:name="ParameterTable">
+    <dse:DataStructureEntity
+      asi:abstract="false"
+      dse:allFields="true"
+      dse:concurrencyHandling="Standard"
+      dse:entity="fileuploadref/DataEntity/fileuploadref/ParameterTable.origam#ParameterTable/70d26e44-4f0b-4a16-bc13-3aeab8070095"
+      x:id="727ceec9-f203-4958-aedc-cf27342c6a14"
+      dse:ignoreCondition="None"
+      dse:ignoreImplicitFilters="false"
+      asi:name="ParameterTable"
+      dse:relationType="Normal"
+      dse:useUpsert="false" />
+  </ds:DataStructure>
+</x:file>

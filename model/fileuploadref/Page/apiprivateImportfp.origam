@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<x:file xmlns:x="http://schemas.origam.com/model-persistence/1.0.0" xmlns:asi="http://schemas.origam.com/Origam.Schema.AbstractSchemaItem/6.0.0" xmlns:ap="http://schemas.origam.com/Origam.Schema.GuiModel.AbstractPage/6.0.0" xmlns:ppfm="http://schemas.origam.com/Origam.Schema.GuiModel.PageParameterFileMapping/6.0.0" xmlns:ppm="http://schemas.origam.com/Origam.Schema.GuiModel.PageParameterMapping/6.0.0" xmlns:wp="http://schemas.origam.com/Origam.Schema.WorkflowModel.WorkflowPage/6.0.0">
+  <wp:Page
+    asi:abstract="false"
+    ap:allowDelete="false"
+    ap:allowPut="false"
+    wp:disableConstraintForInputValidation="false"
+    x:id="d6c4de2d-3dd0-4101-b7c3-468ef6b6ccc1"
+    ap:mimeType="multipart/form-data"
+    asi:name="api/private/Importfp"
+    ap:roles="*"
+    ap:url="api/private/Importfp"
+    wp:workflow="fileuploadref/Workflow/fileuploadref/ImportData.origam#ImportData/56e54936-e6d9-468e-997b-ce416fc5e8b9">
+    <ppm:PageParameterMapping
+      asi:abstract="false"
+      x:id="77a571dc-08ab-4fd6-a9c5-01cd977c46d1"
+      ppm:isList="false"
+      ppm:mappedParameter="entityid"
+      asi:name="EntityId" />
+    <ppfm:PageParameterMapping
+      asi:abstract="false"
+      ppfm:fileInfoType="FileContent"
+      x:id="bf093a48-e02b-43e5-8fdf-9c60878c5b43"
+      ppm:isList="false"
+      ppm:mappedParameter="filepond"
+      asi:name="FileBlob" />
+    <ppfm:PageParameterMapping
+      asi:abstract="false"
+      ppfm:fileInfoType="FileName"
+      x:id="dd3acaa7-f5cb-4be0-87b7-aae4cf5403e4"
+      ppm:isList="false"
+      ppm:mappedParameter="filepond"
+      asi:name="FileName" />
+    <ppm:PageParameterMapping
+      asi:abstract="false"
+      x:id="eba8ab04-0fe4-406d-9fea-2d9a964cff86"
+      ppm:isList="false"
+      ppm:mappedParameter="refrowid"
+      asi:name="RowId" />
+  </wp:Page>
+</x:file>

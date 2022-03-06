@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<x:file xmlns:x="http://schemas.origam.com/model-persistence/1.0.0" xmlns:asi="http://schemas.origam.com/Origam.Schema.AbstractSchemaItem/6.0.0" xmlns:tr="http://schemas.origam.com/Origam.Schema.EntityModel.TransformationReference/6.0.0" xmlns:aws="http://schemas.origam.com/Origam.Schema.WorkflowModel.AbstractWorkflowStep/6.0.1" xmlns:cr="http://schemas.origam.com/Origam.Schema.WorkflowModel.ContextReference/6.0.0" xmlns:cs="http://schemas.origam.com/Origam.Schema.WorkflowModel.ContextStore/6.0.0" xmlns:smcp="http://schemas.origam.com/Origam.Schema.WorkflowModel.ServiceMethodCallParameter/6.0.0" xmlns:smct="http://schemas.origam.com/Origam.Schema.WorkflowModel.ServiceMethodCallTask/6.0.0" xmlns:uift="http://schemas.origam.com/Origam.Schema.WorkflowModel.UIFormTask/6.0.0" xmlns:w="http://schemas.origam.com/Origam.Schema.WorkflowModel.Workflow/6.0.1" xmlns:wt="http://schemas.origam.com/Origam.Schema.WorkflowModel.WorkflowTask/6.0.0" xmlns:wtd="http://schemas.origam.com/Origam.Schema.WorkflowModel.WorkflowTaskDependency/6.0.0">
+  <w:Workflow
+    asi:abstract="false"
+    x:id="125289f6-bc3d-4307-be65-57f3be03f046"
+    asi:name="MultiImportScreen"
+    w:transactionBehavior="InheritExisting">
+    <cs:ContextStore
+      asi:abstract="false"
+      cs:dataType="UniqueIdentifier"
+      cs:disableConstraints="false"
+      x:id="4b34422e-8ff5-4c8b-88c0-73d06938c02c"
+      cs:isReturnValue="false"
+      asi:name="EntityId" />
+    <cs:ContextStore
+      asi:abstract="false"
+      cs:dataType="Xml"
+      cs:disableConstraints="false"
+      x:id="f625984c-9eb5-4035-94d5-af75dd7bd3b9"
+      cs:isReturnValue="false"
+      asi:name="ParameterTable"
+      cs:structure="fileuploadref/DataStructure/fileuploadref/ParameterTable.origam#ParameterTable/2326f711-e633-4ec5-b4c1-fcd5f717ff9c" />
+    <cs:ContextStore
+      asi:abstract="false"
+      cs:dataType="UniqueIdentifier"
+      cs:disableConstraints="false"
+      x:id="096985e3-579a-46a2-b3a7-58ef465e82a3"
+      cs:isReturnValue="false"
+      asi:name="RowId" />
+    <uift:WorkflowTask
+      asi:abstract="false"
+      uift:allowSave="false"
+      uift:autoNext="false"
+      x:id="e605d4fa-e44d-471d-ab31-84167b1e28ac"
+      uift:isFinalForm="false"
+      uift:isRefreshSuppressedBeforeFirstSave="true"
+      asi:name="OpenImport"
+      wt:outputContextStore="fileuploadref/Workflow/fileuploadref/MultiImportScreen.origam#MultiImportScreen/ParameterTable/f625984c-9eb5-4035-94d5-af75dd7bd3b9"
+      wt:outputMethod="FullMerge"
+      uift:refreshPortalAfterSave="False"
+      aws:roles="*"
+      uift:screen="fileuploadref/FormControlSet/fileuploadref/ParameterTable.origam#ParameterTable/99528c45-8f3f-4843-9bcf-abe227d1bbf1">
+      <wtd:WorkflowTaskDependency
+        asi:abstract="false"
+        x:id="e6c8fc7d-e8de-4ab2-bf39-893cf0e937a2"
+        asi:name="After_Transform_ParameterTable"
+        wtd:startEvent="Success"
+        wtd:task="fileuploadref/Workflow/fileuploadref/MultiImportScreen.origam#MultiImportScreen/Transform_ParameterTable/f916fb39-1b2a-46ea-b6f0-f14fccaaaef4" />
+    </uift:WorkflowTask>
+    <smct:WorkflowTask
+      asi:abstract="false"
+      x:id="f916fb39-1b2a-46ea-b6f0-f14fccaaaef4"
+      asi:name="Transform_ParameterTable"
+      wt:outputContextStore="fileuploadref/Workflow/fileuploadref/MultiImportScreen.origam#MultiImportScreen/ParameterTable/f625984c-9eb5-4035-94d5-af75dd7bd3b9"
+      wt:outputMethod="AppendMergeExisting"
+      aws:roles="*"
+      smct:service="Root/Service/DataTransformationService.origam#DataTransformationService/600930a5-102b-43e8-8af1-677c6d7e79f3"
+      smct:serviceMethod="Root/Service/DataTransformationService.origam#DataTransformationService/Transform/a215c2d6-e7aa-4b2f-97d9-03a8d019d4c6">
+      <smcp:ServiceMethodCallParameter
+        asi:abstract="false"
+        x:id="42a1bcde-7458-45cf-9a5e-bd3c0a265268"
+        asi:name="Data"
+        smcp:serviceMethodParameter="Root/Service/DataTransformationService.origam#DataTransformationService/Transform/Data/3e94d691-e045-426a-bc79-febc3562fa15">
+        <cr:WorkflowContextReference
+          asi:abstract="false"
+          cr:castToDataType="String"
+          cr:contextStore="fileuploadref/Workflow/fileuploadref/MultiImportScreen.origam#MultiImportScreen/ParameterTable/f625984c-9eb5-4035-94d5-af75dd7bd3b9"
+          x:id="84a4305e-54a7-47d7-8c4f-16ec5039fad4"
+          asi:name="ParameterTable"
+          cr:xPath="/" />
+      </smcp:ServiceMethodCallParameter>
+      <smcp:ServiceMethodCallParameter
+        asi:abstract="false"
+        x:id="baac4e1f-5680-4544-bd08-946090c3c8d5"
+        asi:name="Parameters"
+        smcp:serviceMethodParameter="Root/Service/DataTransformationService.origam#DataTransformationService/Transform/Parameters/ce3ebb59-6528-4157-b51a-500f84a635f0">
+        <cr:WorkflowContextReference
+          asi:abstract="false"
+          cr:castToDataType="String"
+          cr:contextStore="fileuploadref/Workflow/fileuploadref/MultiImportScreen.origam#MultiImportScreen/EntityId/4b34422e-8ff5-4c8b-88c0-73d06938c02c"
+          x:id="af396ab8-280c-4309-a8e3-9e5b4159d28d"
+          asi:name="entityid"
+          cr:xPath="/" />
+        <cr:WorkflowContextReference
+          asi:abstract="false"
+          cr:castToDataType="String"
+          cr:contextStore="fileuploadref/Workflow/fileuploadref/MultiImportScreen.origam#MultiImportScreen/RowId/096985e3-579a-46a2-b3a7-58ef465e82a3"
+          x:id="640bf34c-3012-4d73-977a-4ce741bf2d1f"
+          asi:name="rowid"
+          cr:xPath="/" />
+      </smcp:ServiceMethodCallParameter>
+      <smcp:ServiceMethodCallParameter
+        asi:abstract="false"
+        x:id="70b76ec9-0902-4b1c-b142-8ffcedcec459"
+        asi:name="XslScript"
+        smcp:serviceMethodParameter="Root/Service/DataTransformationService.origam#DataTransformationService/Transform/XslScript/7eecc204-f38e-49fc-8875-fd6b4ba019fd">
+        <tr:TransformationReference
+          asi:abstract="false"
+          x:id="c8dbecea-0ba2-40cc-9d52-73686978cd8d"
+          asi:name="CreateParameterTable"
+          tr:transformation="fileuploadref/Transformation/fileuploadref/CreateParameterTable.origam#CreateParameterTable/f5f4a30b-b22c-43f8-88c2-7b72167a9120" />
+      </smcp:ServiceMethodCallParameter>
+    </smct:WorkflowTask>
+  </w:Workflow>
+</x:file>

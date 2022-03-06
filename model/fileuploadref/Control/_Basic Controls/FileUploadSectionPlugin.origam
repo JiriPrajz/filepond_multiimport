@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<x:file xmlns:x="http://schemas.origam.com/model-persistence/1.0.0" xmlns:asi="http://schemas.origam.com/Origam.Schema.AbstractSchemaItem/6.0.0" xmlns:ci="http://schemas.origam.com/Origam.Schema.GuiModel.ControlItem/6.0.0" xmlns:cpi="http://schemas.origam.com/Origam.Schema.GuiModel.ControlPropertyItem/6.0.0" xmlns:sia="http://schemas.origam.com/Origam.Schema.SchemaItemAncestor/6.0.0">
+  <ci:Control
+    asi:abstract="false"
+    x:id="497b6edc-f3e5-46fc-853f-85ef8e9ebbfb"
+    ci:isComplex="false"
+    asi:name="FileUploadSectionPlugin"
+    ci:namespace="Origam.Gui.Win"
+    ci:requestSaveAfterChangeAllowed="false"
+    ci:toolboxVisibility="FormDesigner"
+    ci:typeName="Origam.Gui.Win.SectionLevelPlugin">
+    <sia:ancestor
+      sia:ancestor="Root/Control/_Basic Controls/SectionLevelPlugin.origam#SectionLevelPlugin/6382f412-b961-46a7-9a34-29aed844b8b9"
+      x:id="87b2dfa1-b4f2-402f-9a54-af26e0d68ba4" />
+    <cpi:ControlPropertyItem
+      asi:abstract="false"
+      cpi:bindOnly="false"
+      x:id="f861d62b-c2ea-491d-bc9b-b34cf4a7f83e"
+      cpi:localizable="false"
+      asi:name="MaxParallelUploads"
+      cpi:propertyType="Integer" />
+    <cpi:ControlPropertyItem
+      asi:abstract="false"
+      cpi:bindOnly="false"
+      x:id="062ba153-84b4-4aa6-b201-f7dfdcf2ec75"
+      cpi:localizable="false"
+      asi:name="InvalidFileTypeMessage"
+      cpi:propertyType="String" />
+    <cpi:ControlPropertyItem
+      asi:abstract="false"
+      cpi:bindOnly="false"
+      x:id="45cfd6f8-62cd-4ce5-9729-39b7909b3588"
+      cpi:localizable="false"
+      asi:name="ApiUrl"
+      cpi:propertyType="String" />
+    <cpi:ControlPropertyItem
+      asi:abstract="false"
+      cpi:bindOnly="false"
+      x:id="49ed5469-ff37-4a2c-971a-6eb81869a9f4"
+      cpi:localizable="false"
+      asi:name="InstantUpload"
+      cpi:propertyType="Boolean" />
+    <cpi:ControlPropertyItem
+      asi:abstract="false"
+      cpi:bindOnly="false"
+      x:id="807b709c-081f-43ad-b944-0e019acc0c26"
+      cpi:localizable="false"
+      asi:name="FilterFileType"
+      cpi:propertyType="String" />
+  </ci:Control>
+</x:file>

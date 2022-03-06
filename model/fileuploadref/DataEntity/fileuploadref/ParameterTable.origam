@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<x:file xmlns:x="http://schemas.origam.com/model-persistence/1.0.0" xmlns:asi="http://schemas.origam.com/Origam.Schema.AbstractSchemaItem/6.0.0" xmlns:ade="http://schemas.origam.com/Origam.Schema.EntityModel.AbstractDataEntity/6.0.0" xmlns:adec="http://schemas.origam.com/Origam.Schema.EntityModel.AbstractDataEntityColumn/6.0.0" xmlns:de="http://schemas.origam.com/Origam.Schema.EntityModel.DetachedEntity/6.0.0" xmlns:df="http://schemas.origam.com/Origam.Schema.EntityModel.DetachedField/6.0.0">
+  <de:DataEntity
+    asi:abstract="false"
+    ade:audit="None"
+    x:id="70d26e44-4f0b-4a16-bc13-3aeab8070095"
+    asi:name="ParameterTable"
+    ade:readOnly="false">
+    <df:DataEntityColumn
+      asi:abstract="false"
+      adec:allowNulls="true"
+      adec:autoIncrement="false"
+      adec:dataType="UniqueIdentifier"
+      adec:excludeFromAllFields="false"
+      x:id="f5d98f3a-636a-45ae-af6a-44d9ee8a29ea"
+      adec:isPrimaryKey="false"
+      asi:name="EntityId"
+      adec:onCopyAction="Copy"
+      adec:xmlMappingType="Attribute" />
+    <df:DataEntityColumn
+      asi:abstract="false"
+      adec:allowNulls="true"
+      adec:autoIncrement="false"
+      adec:dataType="UniqueIdentifier"
+      adec:excludeFromAllFields="false"
+      x:id="e890949b-26de-42ed-9075-12a7daf40b8f"
+      adec:isPrimaryKey="false"
+      asi:name="RowId"
+      adec:onCopyAction="Copy"
+      adec:xmlMappingType="Attribute" />
+  </de:DataEntity>
+</x:file>

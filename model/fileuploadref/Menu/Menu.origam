@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<x:file xmlns:x="http://schemas.origam.com/model-persistence/1.0.0" xmlns:asi="http://schemas.origam.com/Origam.Schema.AbstractSchemaItem/6.0.0" xmlns:ami="http://schemas.origam.com/Origam.Schema.MenuModel.AbstractMenuItem/6.0.1" xmlns:frmi="http://schemas.origam.com/Origam.Schema.MenuModel.FormReferenceMenuItem/6.0.0">
+  <frmi:MenuItem
+    asi:abstract="false"
+    ami:alwaysOpenNew="false"
+    frmi:autoSaveOnListRecordChange="false"
+    ami:displayName="Base Table"
+    x:id="09deb3c0-a31d-40b3-9b95-e1c54220b0b5"
+    asi:name="BaseTable"
+    ami:openExclusively="false"
+    x:parentId="147775f5-451d-4efd-8634-7f27a2cf50a6"
+    frmi:readOnlyAccess="false"
+    frmi:refreshAfterSaveType="RefreshChangedRecords"
+    frmi:refreshOnFocus="false"
+    frmi:refreshPortalAfterSave="false"
+    frmi:requestSaveAfterUpdate="false"
+    ami:roles="*"
+    frmi:screen="fileuploadref/FormControlSet/fileuploadref/BaseTable.origam#BaseTable/c525053a-5dee-4167-82db-03433b8d681b" />
+</x:file>
