@@ -8,5 +8,8 @@
     <pr:packageReference
       x:id="9b6994cd-feb9-45a3-9bab-3ae6a3b3629b"
       pr:referencedPackage="Root Menu/.origamPackage#b9ab12fe-7f7d-43f7-bedc-93747647d6e4" />
+    <pr:packageReference
+      x:id="e0b95ee9-b72d-4335-9228-1f2449263d83"
+      pr:referencedPackage="Attachments/.origamPackage#bb8c67fb-44c1-4b41-8fce-4d50cd5a759d" />
   </p:package>
 </x:file>
