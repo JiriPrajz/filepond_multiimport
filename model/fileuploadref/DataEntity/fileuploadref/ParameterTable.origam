@@ -12,9 +12,9 @@
       adec:autoIncrement="false"
       adec:dataType="UniqueIdentifier"
       adec:excludeFromAllFields="false"
-      x:id="f5d98f3a-636a-45ae-af6a-44d9ee8a29ea"
-      adec:isPrimaryKey="false"
-      asi:name="EntityId"
+      x:id="45a2ab9c-7120-43c9-86f9-7f259a353e59"
+      adec:isPrimaryKey="true"
+      asi:name="Id"
       adec:onCopyAction="Copy"
       adec:xmlMappingType="Attribute" />
     <df:DataEntityColumn
@@ -26,6 +26,17 @@
       x:id="e890949b-26de-42ed-9075-12a7daf40b8f"
       adec:isPrimaryKey="false"
       asi:name="RowId"
+      adec:onCopyAction="Copy"
+      adec:xmlMappingType="Attribute" />
+    <df:DataEntityColumn
+      asi:abstract="false"
+      adec:allowNulls="true"
+      adec:autoIncrement="false"
+      adec:dataType="UniqueIdentifier"
+      adec:excludeFromAllFields="false"
+      x:id="f5d98f3a-636a-45ae-af6a-44d9ee8a29ea"
+      adec:isPrimaryKey="false"
+      asi:name="EntityId"
       adec:onCopyAction="Copy"
       adec:xmlMappingType="Attribute" />
   </de:DataEntity>

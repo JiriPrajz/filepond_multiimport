@@ -43,7 +43,8 @@
           asi:abstract="false"
           x:id="a209bb4c-4d52-459e-8d9a-05b9b047f07e"
           asi:name="FilterFileType"
-          apvi:propertyId="807b709c-081f-43ad-b944-0e019acc0c26" />
+          apvi:propertyId="807b709c-081f-43ad-b944-0e019acc0c26"
+          pvi:value="image/*" />
         <pvi:PropertyValueItem
           asi:abstract="false"
           x:id="6b88ad9e-2b9e-444f-8a00-0d2569781884"
@@ -60,7 +61,8 @@
           asi:abstract="false"
           x:id="d405844d-9f14-4b76-98bf-dd4d369fee7b"
           asi:name="InvalidFileTypeMessage"
-          apvi:propertyId="062ba153-84b4-4aa6-b201-f7dfdcf2ec75" />
+          apvi:propertyId="062ba153-84b4-4aa6-b201-f7dfdcf2ec75"
+          pvi:value="No picture." />
         <pvi:PropertyValueItem
           asi:abstract="false"
           x:id="33743970-98a0-46b2-b957-6083bbac9a6b"
@@ -72,7 +74,7 @@
           x:id="a93acd01-9685-44c3-b3fb-acadceb92eb9"
           asi:name="MaxParallelUploads"
           apvi:propertyId="f861d62b-c2ea-491d-bc9b-b34cf4a7f83e"
-          pvi:value="2" />
+          pvi:value="1" />
         <pvi:PropertyValueItem
           asi:abstract="false"
           x:id="28856929-78fd-4c3b-9951-12b852f2033f"

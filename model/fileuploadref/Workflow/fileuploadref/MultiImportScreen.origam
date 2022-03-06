@@ -9,6 +9,13 @@
       asi:abstract="false"
       cs:dataType="UniqueIdentifier"
       cs:disableConstraints="false"
+      x:id="096985e3-579a-46a2-b3a7-58ef465e82a3"
+      cs:isReturnValue="false"
+      asi:name="RowId" />
+    <cs:ContextStore
+      asi:abstract="false"
+      cs:dataType="UniqueIdentifier"
+      cs:disableConstraints="false"
       x:id="4b34422e-8ff5-4c8b-88c0-73d06938c02c"
       cs:isReturnValue="false"
       asi:name="EntityId" />
@@ -20,19 +27,12 @@
       cs:isReturnValue="false"
       asi:name="ParameterTable"
       cs:structure="fileuploadref/DataStructure/fileuploadref/ParameterTable.origam#ParameterTable/2326f711-e633-4ec5-b4c1-fcd5f717ff9c" />
-    <cs:ContextStore
-      asi:abstract="false"
-      cs:dataType="UniqueIdentifier"
-      cs:disableConstraints="false"
-      x:id="096985e3-579a-46a2-b3a7-58ef465e82a3"
-      cs:isReturnValue="false"
-      asi:name="RowId" />
     <uift:WorkflowTask
       asi:abstract="false"
       uift:allowSave="false"
       uift:autoNext="false"
       x:id="e605d4fa-e44d-471d-ab31-84167b1e28ac"
-      uift:isFinalForm="false"
+      uift:isFinalForm="true"
       uift:isRefreshSuppressedBeforeFirstSave="true"
       asi:name="OpenImport"
       wt:outputContextStore="fileuploadref/Workflow/fileuploadref/MultiImportScreen.origam#MultiImportScreen/ParameterTable/f625984c-9eb5-4035-94d5-af75dd7bd3b9"
@@ -71,26 +71,6 @@
       </smcp:ServiceMethodCallParameter>
       <smcp:ServiceMethodCallParameter
         asi:abstract="false"
-        x:id="baac4e1f-5680-4544-bd08-946090c3c8d5"
-        asi:name="Parameters"
-        smcp:serviceMethodParameter="Root/Service/DataTransformationService.origam#DataTransformationService/Transform/Parameters/ce3ebb59-6528-4157-b51a-500f84a635f0">
-        <cr:WorkflowContextReference
-          asi:abstract="false"
-          cr:castToDataType="String"
-          cr:contextStore="fileuploadref/Workflow/fileuploadref/MultiImportScreen.origam#MultiImportScreen/EntityId/4b34422e-8ff5-4c8b-88c0-73d06938c02c"
-          x:id="af396ab8-280c-4309-a8e3-9e5b4159d28d"
-          asi:name="entityid"
-          cr:xPath="/" />
-        <cr:WorkflowContextReference
-          asi:abstract="false"
-          cr:castToDataType="String"
-          cr:contextStore="fileuploadref/Workflow/fileuploadref/MultiImportScreen.origam#MultiImportScreen/RowId/096985e3-579a-46a2-b3a7-58ef465e82a3"
-          x:id="640bf34c-3012-4d73-977a-4ce741bf2d1f"
-          asi:name="rowid"
-          cr:xPath="/" />
-      </smcp:ServiceMethodCallParameter>
-      <smcp:ServiceMethodCallParameter
-        asi:abstract="false"
         x:id="70b76ec9-0902-4b1c-b142-8ffcedcec459"
         asi:name="XslScript"
         smcp:serviceMethodParameter="Root/Service/DataTransformationService.origam#DataTransformationService/Transform/XslScript/7eecc204-f38e-49fc-8875-fd6b4ba019fd">
@@ -99,6 +79,26 @@
           x:id="c8dbecea-0ba2-40cc-9d52-73686978cd8d"
           asi:name="CreateParameterTable"
           tr:transformation="fileuploadref/Transformation/fileuploadref/CreateParameterTable.origam#CreateParameterTable/f5f4a30b-b22c-43f8-88c2-7b72167a9120" />
+      </smcp:ServiceMethodCallParameter>
+      <smcp:ServiceMethodCallParameter
+        asi:abstract="false"
+        x:id="baac4e1f-5680-4544-bd08-946090c3c8d5"
+        asi:name="Parameters"
+        smcp:serviceMethodParameter="Root/Service/DataTransformationService.origam#DataTransformationService/Transform/Parameters/ce3ebb59-6528-4157-b51a-500f84a635f0">
+        <cr:WorkflowContextReference
+          asi:abstract="false"
+          cr:castToDataType="String"
+          cr:contextStore="fileuploadref/Workflow/fileuploadref/MultiImportScreen.origam#MultiImportScreen/RowId/096985e3-579a-46a2-b3a7-58ef465e82a3"
+          x:id="640bf34c-3012-4d73-977a-4ce741bf2d1f"
+          asi:name="rowid"
+          cr:xPath="/" />
+        <cr:WorkflowContextReference
+          asi:abstract="false"
+          cr:castToDataType="String"
+          cr:contextStore="fileuploadref/Workflow/fileuploadref/MultiImportScreen.origam#MultiImportScreen/EntityId/4b34422e-8ff5-4c8b-88c0-73d06938c02c"
+          x:id="af396ab8-280c-4309-a8e3-9e5b4159d28d"
+          asi:name="entityid"
+          cr:xPath="/" />
       </smcp:ServiceMethodCallParameter>
     </smct:WorkflowTask>
   </w:Workflow>

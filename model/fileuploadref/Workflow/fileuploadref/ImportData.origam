@@ -7,6 +7,13 @@
     w:transactionBehavior="InheritExisting">
     <cs:ContextStore
       asi:abstract="false"
+      cs:dataType="UniqueIdentifier"
+      cs:disableConstraints="false"
+      x:id="42e86a47-cb32-4e28-abc1-435c998ac1e5"
+      cs:isReturnValue="false"
+      asi:name="RowId" />
+    <cs:ContextStore
+      asi:abstract="false"
       cs:dataType="Blob"
       cs:disableConstraints="false"
       x:id="23a3b9b2-da35-4a6b-93c8-ea508092e62c"
@@ -19,13 +26,6 @@
       x:id="399b9406-ae9b-4dc8-adca-4fff4badea05"
       cs:isReturnValue="false"
       asi:name="FileName" />
-    <cs:ContextStore
-      asi:abstract="false"
-      cs:dataType="String"
-      cs:disableConstraints="false"
-      x:id="42e86a47-cb32-4e28-abc1-435c998ac1e5"
-      cs:isReturnValue="false"
-      asi:name="RowId" />
     <cs:ContextStore
       asi:abstract="false"
       cs:dataType="UniqueIdentifier"
@@ -127,13 +127,6 @@
         <cr:WorkflowContextReference
           asi:abstract="false"
           cr:castToDataType="String"
-          cr:contextStore="fileuploadref/Workflow/fileuploadref/ImportData.origam#ImportData/EntityId/5a960df7-f381-4e2f-9aaf-a6916f91ca38"
-          x:id="ec166623-146b-45cf-8a0b-d7491fccca5f"
-          asi:name="entityId"
-          cr:xPath="/" />
-        <cr:WorkflowContextReference
-          asi:abstract="false"
-          cr:castToDataType="String"
           cr:contextStore="fileuploadref/Workflow/fileuploadref/ImportData.origam#ImportData/FileName/399b9406-ae9b-4dc8-adca-4fff4badea05"
           x:id="29ce34a2-11c7-4691-8662-341171aefeee"
           asi:name="fileName"
@@ -144,6 +137,13 @@
           cr:contextStore="fileuploadref/Workflow/fileuploadref/ImportData.origam#ImportData/FileBlob/23a3b9b2-da35-4a6b-93c8-ea508092e62c"
           x:id="d0a3a2ce-54ea-498a-8eae-602624c9df16"
           asi:name="attachment"
+          cr:xPath="/" />
+        <cr:WorkflowContextReference
+          asi:abstract="false"
+          cr:castToDataType="String"
+          cr:contextStore="fileuploadref/Workflow/fileuploadref/ImportData.origam#ImportData/EntityId/5a960df7-f381-4e2f-9aaf-a6916f91ca38"
+          x:id="ec166623-146b-45cf-8a0b-d7491fccca5f"
+          asi:name="entityId"
           cr:xPath="/" />
         <cr:WorkflowContextReference
           asi:abstract="false"
