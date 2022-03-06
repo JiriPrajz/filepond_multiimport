@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<x:file xmlns:x="http://schemas.origam.com/model-persistence/1.0.0" xmlns:p="http://schemas.origam.com/Origam.Schema.Package/6.1.0" xmlns:pr="http://schemas.origam.com/Origam.Schema.PackageReference/6.0.0">
+  <p:package
+    x:id="bd3cb40f-5069-40b3-acc0-115ca424db11"
+    x:isFolder="true"
+    p:name="fileuploadref"
+    p:version="1.0.0">
+    <pr:packageReference
+      x:id="9b6994cd-feb9-45a3-9bab-3ae6a3b3629b"
+      pr:referencedPackage="Root Menu/.origamPackage#b9ab12fe-7f7d-43f7-bedc-93747647d6e4" />
+  </p:package>
+</x:file>

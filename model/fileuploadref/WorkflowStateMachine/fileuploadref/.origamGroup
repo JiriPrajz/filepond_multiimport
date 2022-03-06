@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<x:file xmlns:x="http://schemas.origam.com/model-persistence/1.0.0" xmlns:g="http://schemas.origam.com/Origam.Schema.SchemaItemGroup/6.0.0">
+  <g:group
+    x:id="cfef2fc4-1259-4e24-9b24-c2b2c02ddba0"
+    x:isFolder="true"
+    g:name="fileuploadref"
+    g:rootItemType="WorkflowStateMachine" />
+</x:file>

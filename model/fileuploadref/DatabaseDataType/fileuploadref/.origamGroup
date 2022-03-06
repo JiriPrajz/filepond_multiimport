@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<x:file xmlns:x="http://schemas.origam.com/model-persistence/1.0.0" xmlns:g="http://schemas.origam.com/Origam.Schema.SchemaItemGroup/6.0.0">
+  <g:group
+    x:id="3b536ae4-c26b-4bbe-9dd2-36627e8c3538"
+    x:isFolder="true"
+    g:name="fileuploadref"
+    g:rootItemType="DatabaseDataType" />
+</x:file>
