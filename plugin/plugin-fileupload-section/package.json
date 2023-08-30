@@ -1,14 +1,14 @@
 {
-  "name": "origam-plugin-filepond-section",
+  "name": "origam-plugin-filepond-multimport",
   "main": "dist/index.js",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "license": "GPL-3.0",
   "files": [
     "dist"
   ],
   "devDependencies": {
-    "@types/react": "^17.0.34",
-    "@types/react-dom": "^17.0.11",
+	"@types/react": "^17.0.34",
+    "@types/react-dom": "17.0.2",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
     "postcss": "^8.3.11",
@@ -27,7 +27,7 @@
     "start": "rollup -c -w"
   },
   "dependencies": {
-    "@origam/plugin-interfaces": "^1.2.0",
+    "@origam/plugins": "^1.0.2",
     "filepond": "^4.30.3",
     "filepond-plugin-file-validate-type": "^1.2.6",
     "filepond-plugin-image-exif-orientation": "^1.0.11",

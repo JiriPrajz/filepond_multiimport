@@ -1,14 +1,13 @@
 import S from './styles.module.scss';
 import { observable } from "mobx";
 import React, { useState } from "react";
-import moment from "moment";
 import {
   ILocalization,
   ILocalizer,
-  IPluginData,
-  ISectionPlugin
-} from "@origam/plugin-interfaces";
-import { FilePond,registerPlugin } from "react-filepond";
+  ISectionPlugin,
+  ISectionPluginData,
+} from  "@origam/plugins";;
+import { FilePond,registerPlugin } from 'react-filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 
 import 'filepond/dist/filepond.min.css'
@@ -34,6 +33,10 @@ const maxParallelUploads = "MaxParallelUploads"
 const instantUpload = "InstantUpload"
 
 export class FileUploadSectionPlugin implements ISectionPlugin {
+  createLocalizer: ((localizations: ILocalization[]) => ILocalizer) | undefined;
+  onSessionRefreshed(): void {
+    
+  }
   requestSessionRefresh: (() => Promise<any>) | undefined;
   setScreenParameters: ((parameters: { [key: string]: string; }) => void) | undefined;
   $type_ISectionPlugin: 1 = 1;
@@ -62,11 +65,9 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
     return xmlAttributes[parameterName];
   }
 
-  getComponent(data: IPluginData, createLocalizer: (localizations: ILocalization[]) => ILocalizer): JSX.Element {
-    const localizer = createLocalizer([]);
-    
-    moment.locale(localizer.locale)
-    if (!this.initialized) {
+  getComponent(data: ISectionPluginData, createLocalizer: (localizations: ILocalization[]) => ILocalizer): JSX.Element {
+    this.createLocalizer = createLocalizer;
+        if (!this.initialized) {
       return <></>;
     }
     console.info(data.dataView);
@@ -75,9 +76,9 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
     {
       return <></>;
     }
-    const entityId = data.dataView.tableRows[0][2];
+    //const entityId = data.dataView.tableRows[0][2];
 
-    const url = this.apiurl + "?refrowid=" + refRowId + "&entityid="+entityId;
+    const url = this.apiurl + "?refrowid=" + refRowId; //+ "&entityid="+entityId;
     console.info(url);
     return (<FilePondComponent fileType={this.filterFileType} apiurl={url} invalidFileTypeMessage={this.invalidFileTypeMessage} 
     instantUpload={this.instantUpload} maxParallelUploads={this.maxParallelUploads} />    );
@@ -85,7 +86,7 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
   @observable
   getScreenParameters: (() => { [parameter: string]: string }) | undefined;
 
-  generateData( data: IPluginData, column: string) {
+  generateData( data: ISectionPluginData, column: string) {
     return data.dataView.tableRows
        .map(row => 
              data.dataView.getCellValue(row, column)
