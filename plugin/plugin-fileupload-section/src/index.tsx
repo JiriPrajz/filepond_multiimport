@@ -76,9 +76,17 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
     {
       return <></>;
     }
-    const entityId = data.dataView.tableRows[0][2];
 
-    const url = this.apiurl + "?refrowid=" + refRowId + "&entityid="+entityId;
+    var url = this.apiurl + "?refrowid=" + refRowId
+    if (data.dataView.tableRows[0]["EntityId"] != null)
+    {
+      url += "&entityid="+data.dataView.tableRows[0]["EntityId"];
+    }
+    if (data.dataView.tableRows[0]["ProjectImageCategory"] != null)
+    {
+      url += "&category="+data.dataView.tableRows[0]["ProjectImageCategory"];
+    }
+     
     return (<FilePondComponent fileType={this.filterFileType} apiurl={url} invalidFileTypeMessage={this.invalidFileTypeMessage} 
     instantUpload={this.instantUpload} maxParallelUploads={this.maxParallelUploads} />    );
   }
