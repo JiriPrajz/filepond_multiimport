@@ -46,6 +46,7 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
   invalidFileTypeMessage: string | undefined;
   instantUpload:boolean | undefined;
   maxParallelUploads:number | undefined;
+  labels: string[] = [];
 
   @observable
   initialized = false;
@@ -71,25 +72,43 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
       return <></>;
     }
     console.info(data.dataView);
-    const refRowId = data.dataView.tableRows[0][1];
+    
+    //const property01 = this.getProperty(data, "RowId")
+    const refRowId = data.dataView.getCellValue(data.dataView.tableRows[0], "RowId");
+
+    //const property02 = this.getProperty(data, "EntityId")    
+    const EntityId = data.dataView.getCellValue(data.dataView.tableRows[0], "EntityId");
+
+    //const property03 = this.getProperty(data, "Category")    
+    const Category = data.dataView.getCellValue(data.dataView.tableRows[0], "Category");
+
     if(refRowId == null)
     {
       return <></>;
     }
 
     var url = this.apiurl + "?refrowid=" + refRowId
-    if (data.dataView.tableRows[0]["EntityId"] != null)
+    if (EntityId != null)
     {
-      url += "&entityid="+data.dataView.tableRows[0]["EntityId"];
+      url += "&entityid="+EntityId;
     }
-    if (data.dataView.tableRows[0]["ProjectImageCategory"] != null)
+    if (Category!= null)
     {
-      url += "&category="+data.dataView.tableRows[0]["ProjectImageCategory"];
+      url += "&category="+Category;
     }
      
     return (<FilePondComponent fileType={this.filterFileType} apiurl={url} invalidFileTypeMessage={this.invalidFileTypeMessage} 
     instantUpload={this.instantUpload} maxParallelUploads={this.maxParallelUploads} />    );
   }
+  
+  getProperty(data: ISectionPluginData, propertyId: string) {
+    const property = data.dataView.properties.find(prop => prop.id === propertyId)
+    if (!property) {
+      throw new Error(`Property ${propertyId} was not found`)
+    }
+    return property;
+  }
+
   @observable
   getScreenParameters: (() => { [parameter: string]: string }) | undefined;
 
