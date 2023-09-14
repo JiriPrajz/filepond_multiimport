@@ -137,12 +137,30 @@ export const FilePondComponent: React.FC<{
   }
   const [files] = useState([])
   const [setFiles]:any = useState([])
+  function getAuthorization(): string | number | boolean {
+    const token = sessionStorage.getItem('origamAuthToken');
+    if(token != null)
+    {
+      return ` Bearer ${sessionStorage.getItem('origamAuthToken')}`;
+    }
+    return "";
+  }
+
   return (
     <div className={S.mainContainer}>
       <div className={S.subContainer}>
       <div className="FilePondComponent" >
            <FilePond
-              server={props.apiurl}
+              server={
+                {
+                   process: {
+                       url: props.apiurl,
+                       headers: ({
+                         Authorization: getAuthorization()
+                       })
+                   }
+               }
+               }
               allowFileTypeValidation={allowFileTypeValidation}
               acceptedFileTypes={[ftype]}
               labelFileTypeNotAllowed={props.invalidFileTypeMessage}
