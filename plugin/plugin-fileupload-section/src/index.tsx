@@ -69,24 +69,23 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
         if (!this.initialized) {
       return <></>;
     }
-    console.info(data.dataView);
-    
-    const refRowId = data.dataView.getCellValue(data.dataView.tableRows[0], "RowId");
-    const EntityId = data.dataView.getCellValue(data.dataView.tableRows[0], "EntityId");
-    const Category = data.dataView.getCellValue(data.dataView.tableRows[0], "Category");
 
-    if(refRowId == null)
+    if(!this.hasProperty(data, "RowId"))
     {
       return <></>;
     }
 
+    const refRowId = data.dataView.getCellValue(data.dataView.tableRows[0], "RowId");
     var url = this.apiurl + "?refrowid=" + refRowId
-    if (EntityId != null)
+
+    if (this.hasProperty(data, "EntityId"))
     {
+      const EntityId = data.dataView.getCellValue(data.dataView.tableRows[0], "EntityId");
       url += "&entityid="+EntityId;
     }
-    if (Category!= null)
+    if (this.hasProperty(data, "Category"))
     {
+      const Category = data.dataView.getCellValue(data.dataView.tableRows[0], "Category");
       url += "&category="+Category;
     }
      
@@ -100,6 +99,14 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
       throw new Error(`Property ${propertyId} was not found`)
     }
     return property;
+  }
+
+  hasProperty(data: ISectionPluginData, propertyId: string) {
+    const property = data.dataView.properties.find(prop => prop.id === propertyId);
+    if (property == undefined) {
+      return false;
+    }
+    return true;
   }
 
   @observable
