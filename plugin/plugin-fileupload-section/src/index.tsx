@@ -12,7 +12,6 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 
 import 'filepond/dist/filepond.min.css'
 
-
 // Import the Image EXIF Orientation and Image Preview plugins
 // Note: These need to be installed separately
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
@@ -24,7 +23,6 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 // Register the plugin
 registerPlugin(FilePondPluginFileValidateType);
-
 
 const apiurl = "ApiUrl";
 const filterFileType = "FilterFileType";
@@ -73,13 +71,8 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
     }
     console.info(data.dataView);
     
-    //const property01 = this.getProperty(data, "RowId")
     const refRowId = data.dataView.getCellValue(data.dataView.tableRows[0], "RowId");
-
-    //const property02 = this.getProperty(data, "EntityId")    
     const EntityId = data.dataView.getCellValue(data.dataView.tableRows[0], "EntityId");
-
-    //const property03 = this.getProperty(data, "Category")    
     const Category = data.dataView.getCellValue(data.dataView.tableRows[0], "Category");
 
     if(refRowId == null)
@@ -128,7 +121,13 @@ export const FilePondComponent: React.FC<{
   maxParallelUploads:number | undefined
 
 }> = (props) => {
-  const ftype: string = props.fileType ?? "";
+  var ftype: string = props.fileType ?? "";
+  var allowFileTypeValidation : boolean = true;
+  if (ftype == "*")
+  {
+      allowFileTypeValidation = false;
+      ftype = "";
+  }
   const [files] = useState([])
   const [setFiles]:any = useState([])
   return (
@@ -137,7 +136,7 @@ export const FilePondComponent: React.FC<{
       <div className="FilePondComponent" >
            <FilePond
               server={props.apiurl}
-              allowFileTypeValidation={true}
+              allowFileTypeValidation={allowFileTypeValidation}
               acceptedFileTypes={[ftype]}
               labelFileTypeNotAllowed={props.invalidFileTypeMessage}
               instantUpload={props.instantUpload??false}
