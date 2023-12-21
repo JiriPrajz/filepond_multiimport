@@ -39,7 +39,7 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
   setScreenParameters: ((parameters: { [key: string]: string; }) => void) | undefined;
   $type_ISectionPlugin: 1 = 1;
   id: string = ""
-  apiurl: string ;
+  apiurl: string = "" ;
   filterFileType: string | undefined;
   invalidFileTypeMessage: string | undefined;
   instantUpload:boolean | undefined;
