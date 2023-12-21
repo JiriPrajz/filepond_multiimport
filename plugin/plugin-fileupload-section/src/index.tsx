@@ -170,7 +170,7 @@ export const FilePondComponent: React.FC<{
               allowReorder={true}
               allowMultiple={true}
               onupdatefiles={setFiles}
-              onerror={(error) => {if(error.code == 401) {alert("Please logout and login again.")} else {alert(error.body)}}}
+              onerror={(error: any) => {if(error.code == 401) {alert("Please logout and login again.")} else {alert(error.body)}}}
               labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
       />
       </div>
