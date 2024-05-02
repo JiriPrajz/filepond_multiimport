@@ -1,8 +1,8 @@
 import S from './styles.module.scss';
 import { observable } from "mobx";
 import React, { useState } from "react";
-import { IScreenPlugin } from "plugins/interfaces/IScreenPlugin";
-import { IScreenPluginData } from "plugins/interfaces/IScreenPluginData";
+import { ISectionPlugin } from "plugins/interfaces/ISectionPlugin";
+import { ISectionPluginData } from "plugins/interfaces/ISectionPluginData";
 import { ILocalization } from "plugins/interfaces/ILocalization";
 import { ILocalizer } from "plugins/interfaces/ILocalizer";
 import { FilePond,registerPlugin } from 'react-filepond';
@@ -92,7 +92,7 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
   }
   
   getProperty(data: ISectionPluginData, propertyId: string) {
-    const property = data.dataView.properties.find(prop => prop.id === propertyId)
+    const property = data.dataView.properties.find((prop: { id: string; }) => prop.id === propertyId)
     if (!property) {
       throw new Error(`Property ${propertyId} was not found`)
     }
@@ -100,7 +100,7 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
   }
 
   hasProperty(data: ISectionPluginData, propertyId: string) {
-    const property = data.dataView.properties.find(prop => prop.id === propertyId);
+    const property = data.dataView.properties.find((prop: { id: string; }) => prop.id === propertyId);
     if (property == undefined) {
       return false;
     }
@@ -112,7 +112,7 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
 
   generateData( data: ISectionPluginData, column: string) {
     return data.dataView.tableRows
-       .map(row => 
+       .map((row: any) => 
              data.dataView.getCellValue(row, column)
          );
    }
