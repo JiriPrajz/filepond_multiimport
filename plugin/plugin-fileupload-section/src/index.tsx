@@ -1,12 +1,10 @@
 import S from './styles.module.scss';
 import { observable } from "mobx";
 import React, { useState } from "react";
-import {
-  ILocalization,
-  ILocalizer,
-  ISectionPlugin,
-  ISectionPluginData,
-} from  "@origam/plugins";;
+import { IScreenPlugin } from "plugins/interfaces/IScreenPlugin";
+import { IScreenPluginData } from "plugins/interfaces/IScreenPluginData";
+import { ILocalization } from "plugins/interfaces/ILocalization";
+import { ILocalizer } from "plugins/interfaces/ILocalizer";
 import { FilePond,registerPlugin } from 'react-filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 
