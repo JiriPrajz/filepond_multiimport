@@ -1,6 +1,6 @@
 import S from './styles.module.scss';
 import { observable } from "mobx";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ISectionPlugin } from "plugins/interfaces/ISectionPlugin";
 import { ISectionPluginData } from "plugins/interfaces/ISectionPluginData";
 import { ILocalization } from "plugins/interfaces/ILocalization";
@@ -23,6 +23,7 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 registerPlugin(FilePondPluginFileValidateType);
 
 const apiurl = "ApiUrl";
+const apiloadurl = "ApiLoadUrl";
 const filterFileType = "FilterFileType";
 const invalidFileTypeMessage = "InvalidFileTypeMessage"
 const maxParallelUploads = "MaxParallelUploads"
@@ -38,6 +39,7 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
   $type_ISectionPlugin: 1 = 1;
   id: string = ""
   apiurl: string = "" ;
+  apiloadurl: string = "" ;
   filterFileType: string | undefined;
   invalidFileTypeMessage: string | undefined;
   instantUpload:boolean | undefined;
@@ -49,6 +51,7 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
 
   initialize(xmlAttributes: { [key: string]: string }): void {
     this.apiurl = this.getXmlParameter(xmlAttributes, apiurl);
+    this.apiloadurl = this.getXmlParameter(xmlAttributes, apiloadurl);
     this.filterFileType = this.getXmlParameter(xmlAttributes, filterFileType);
     this.invalidFileTypeMessage = this.getXmlParameter(xmlAttributes, invalidFileTypeMessage);
     this.instantUpload = (this.getXmlParameter(xmlAttributes, instantUpload) =="true");
@@ -74,20 +77,23 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
     }
 
     const refRowId = data.dataView.getCellValue(data.dataView.tableRows[0], "RowId");
-    var url = this.apiurl + "?refrowid=" + refRowId
-
+    var urlparam = "?refrowid=" + refRowId
+    
     if (this.hasProperty(data, "EntityId"))
     {
       const EntityId = data.dataView.getCellValue(data.dataView.tableRows[0], "EntityId");
-      url += "&entityid="+EntityId;
+      urlparam += "&entityid="+EntityId;
     }
     if (this.hasProperty(data, "Category"))
     {
       const Category = data.dataView.getCellValue(data.dataView.tableRows[0], "Category");
-      url += "&category="+Category;
+      urlparam += "&category="+Category;
     }
-     
-    return (<FilePondComponent fileType={this.filterFileType} apiurl={url} invalidFileTypeMessage={this.invalidFileTypeMessage} 
+    
+    var url = this.apiurl + urlparam
+    var loadurl = this.apiloadurl + urlparam
+
+    return (<FilePondComponent fileType={this.filterFileType} apiurl={url} loadurl={loadurl} invalidFileTypeMessage={this.invalidFileTypeMessage} 
     instantUpload={this.instantUpload} maxParallelUploads={this.maxParallelUploads} />    );
   }
   
@@ -121,6 +127,7 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
 export const FilePondComponent: React.FC<{
   fileType:string | undefined;
   apiurl:string;
+  loadurl:string;
   invalidFileTypeMessage:string | undefined
   instantUpload:boolean | undefined
   maxParallelUploads:number | undefined
@@ -135,14 +142,46 @@ export const FilePondComponent: React.FC<{
   }
   const [files] = useState([])
   const [setFiles]:any = useState([])
-  function getAuthorization(): string | number | boolean {
+  
+  function getAuthorization(): string {
     const token = sessionStorage.getItem('origamAuthToken');
-    if(token != null)
-    {
-      return ` Bearer ${sessionStorage.getItem('origamAuthToken')}`;
+    if (token != null) {
+      return `Bearer ${token}`;
     }
     return "";
   }
+
+  // Načtení souborů při inicializaci komponenty
+  useEffect(() => {
+    async function fetchFiles() {
+      try {
+        const response = await fetch(`${props.loadurl}`, {
+          headers: {
+            Authorization: getAuthorization(),
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch files: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        // Předpokládáme, že server vrací pole souborů s vlastností `file`
+        const initialFiles = data.map((file: any) => ({
+          source: file.id, // Unikátní identifikátor souboru
+          options: {
+            type: "local",
+          },
+        }));
+        setFiles(initialFiles);
+      } catch (error) {
+        console.error("Error fetching files:", error);
+      }
+    }
+
+    fetchFiles();
+  }, [props.loadurl]); // Spustí se pouze při změně `props.apiurl`
+
 
   return (
     <div className={S.mainContainer}>
