@@ -165,14 +165,25 @@ export const FilePondComponent: React.FC<{
           throw new Error(`Failed to fetch files: ${response.statusText}`);
         }
 
-        const data = await response.json();
-        // Předpokládáme, že server vrací pole souborů s vlastností `file`
-        const initialFiles = data.map((file: any) => ({
-          source: file.id, // Unikátní identifikátor souboru
-          options: {
-            type: "local",
+        // Přístup k jednotlivým hodnotám
+        const responseData = await response.json();
+        const attachments = responseData.ROOT.Attachment;
+
+       // Transformace příloh do formátu očekávaného FilePond
+      const initialFiles = attachments.map((attachment: { Id: any; FileName: any; Data: any }) => ({
+        source: attachment.Id, // Unikátní identifikátor souboru
+        options: {
+          type: "local",
+          file: {
+            name: attachment.FileName, // Název souboru
+            size: 0, // Velikost souboru (pokud je dostupná)
+            // Vložení dat souboru (pokud je dostupná)
+            data: attachment.Data, // Data souboru (pokud je dostupná)
+            type: "application/octet-stream", // Typ souboru (pokud je dostupný)
           },
-        }));
+        },
+      }));
+
         setFiles(initialFiles);
       } catch (error) {
         console.error("Error fetching files:", error);
