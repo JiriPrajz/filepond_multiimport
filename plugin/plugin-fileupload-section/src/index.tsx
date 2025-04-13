@@ -140,8 +140,8 @@ export const FilePondComponent: React.FC<{
       allowFileTypeValidation = false;
       ftype = "";
   }
-  const [files] = useState([])
-  const [setFiles]:any = useState([])
+  const [files, setFiles] = useState([]);
+ 
   
   function getAuthorization(): string {
     const token = sessionStorage.getItem('origamAuthToken');
@@ -174,7 +174,7 @@ export const FilePondComponent: React.FC<{
         source: attachment.Id, // Unikátní identifikátor souboru
         options: {
           type: "local",
-          file: {
+          files: {
             name: attachment.FileName, // Název souboru
             size: 0, // Velikost souboru (pokud je dostupná)
             // Vložení dat souboru (pokud je dostupná)
@@ -217,7 +217,12 @@ export const FilePondComponent: React.FC<{
               files={files}
               allowReorder={true}
               allowMultiple={true}
-              onupdatefiles={setFiles}
+              onupdatefiles={(fileItems) => {
+                // Set current file objects to this.state
+                useState({
+                    files: fileItems.map((fileItem) => fileItem.file),
+                });
+            }}
               onerror={(error: any) => {if(error.code == 401) {alert("Please logout and login again.")} else {alert(error.body)}}}
               labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
       />
