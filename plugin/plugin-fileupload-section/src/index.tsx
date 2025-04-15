@@ -7,20 +7,20 @@ import { ILocalization } from "plugins/interfaces/ILocalization";
 import { ILocalizer } from "plugins/interfaces/ILocalizer";
 import { FilePond,registerPlugin } from 'react-filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-
 import 'filepond/dist/filepond.min.css'
-
-// Import the Image EXIF Orientation and Image Preview plugins
-// Note: These need to be installed separately
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-
-// Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+import FilePondPluginFilePoster from "filepond-plugin-file-poster";
+import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
+import { FilePondFile } from 'filepond';
 
 // Register the plugin
+registerPlugin(FilePondPluginFileEncode);
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 registerPlugin(FilePondPluginFileValidateType);
+registerPlugin(FilePondPluginFilePoster);
 
 const apiurl = "ApiUrl";
 const apiloadurl = "ApiLoadUrl";
@@ -140,8 +140,7 @@ export const FilePondComponent: React.FC<{
       allowFileTypeValidation = false;
       ftype = "";
   }
-  const [files, setFiles] = useState([]);
- 
+  const [files, setFiles] = useState<File[]>([]);
   
   function getAuthorization(): string {
     const token = sessionStorage.getItem('origamAuthToken');
@@ -151,7 +150,18 @@ export const FilePondComponent: React.FC<{
     return "";
   }
 
-  // Načtení souborů při inicializaci komponenty
+  function base64ToBlob(base64: string, mimeType: string): Blob {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+  
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+  
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
+  }
+
   useEffect(() => {
     async function fetchFiles() {
       try {
@@ -165,25 +175,33 @@ export const FilePondComponent: React.FC<{
           throw new Error(`Failed to fetch files: ${response.statusText}`);
         }
 
-        // Přístup k jednotlivým hodnotám
         const responseData = await response.json();
         const attachments = responseData.ROOT.Attachment;
 
-       // Transformace příloh do formátu očekávaného FilePond
-      const initialFiles = attachments.map((attachment: { Id: any; FileName: any; Data: any }) => ({
-        source: attachment.Id, // Unikátní identifikátor souboru
-        options: {
-          type: "local",
-          files: {
-            name: attachment.FileName, // Název souboru
-            size: 0, // Velikost souboru (pokud je dostupná)
-            // Vložení dat souboru (pokud je dostupná)
-            data: attachment.Data, // Data souboru (pokud je dostupná)
-            type: "application/octet-stream", // Typ souboru (pokud je dostupný)
+        const initialFiles = attachments.map((attachment: { Id: any; FileName: any; Data: any }) => {
+        const mimeType = 'image/' + attachment.FileName.split('.').pop();
+        const blob = base64ToBlob(attachment.Data, mimeType);
+        const file = new File([blob], attachment.FileName, { type: mimeType });
+        const posterDataURL = "data:image/jpeg;base64," + attachment.Data;
+        return {
+          source: file,
+          options: {
+            type: "local",
+            load: true,
+            metadata: {
+              poster: posterDataURL
+            },
+            file: {
+              id: attachment.Id,
+              name: attachment.FileName,
+              type: mimeType,
+              size: file.size,
+              data: attachment.Data
+            }
           },
-        },
-      }));
-
+        };
+      });
+      
         setFiles(initialFiles);
       } catch (error) {
         console.error("Error fetching files:", error);
@@ -191,8 +209,7 @@ export const FilePondComponent: React.FC<{
     }
 
     fetchFiles();
-  }, [props.loadurl]); // Spustí se pouze při změně `props.apiurl`
-
+  }, [props.loadurl]);
 
   return (
     <div className={S.mainContainer}>
@@ -209,20 +226,19 @@ export const FilePondComponent: React.FC<{
                    }
                }
                }
+               allowFilePoster={true}
               allowFileTypeValidation={allowFileTypeValidation}
               acceptedFileTypes={[ftype]}
               labelFileTypeNotAllowed={props.invalidFileTypeMessage}
               instantUpload={props.instantUpload??false}
               maxParallelUploads={props.maxParallelUploads??1}
+              allowImagePreview={true}
               files={files}
+              onupdatefiles={(fileItems: FilePondFile[]) => {
+                setFiles(fileItems.map((f: FilePondFile) => f.file as File));
+              }}
               allowReorder={true}
               allowMultiple={true}
-              onupdatefiles={(fileItems) => {
-                // Set current file objects to this.state
-                useState({
-                    files: fileItems.map((fileItem) => fileItem.file),
-                });
-            }}
               onerror={(error: any) => {if(error.code == 401) {alert("Please logout and login again.")} else {alert(error.body)}}}
               labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
       />
