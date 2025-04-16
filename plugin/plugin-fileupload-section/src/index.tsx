@@ -239,11 +239,15 @@ export const FilePondComponent: React.FC<{
       });
   }
 
+  function beforeRemove(item: FilePondFile): boolean | Promise<boolean> {
+      return confirm("Are you sure you want to remove this file?");
+  }
+
   return (
     <div className={S.mainContainer}>
       <div className={S.subContainer}>
       <div className="FilePondComponent" >
-           <FilePond
+           <FilePond beforeRemoveFile={beforeRemove}
               server={
                 {
                    process: {
@@ -266,6 +270,8 @@ export const FilePondComponent: React.FC<{
                 setFiles(fileItems.map((f: FilePondFile) => f.file as File));
               }}
               onremovefile={(errRes, file) => handleRemove(errRes, file)}
+              allowRevert={true}
+              allowDrop={false}
               allowReorder={true}
               allowMultiple={true}
               onerror={(error: any) => {if(error.code == 401) {alert("Please logout and login again.")} else {alert(error.body)}}}
