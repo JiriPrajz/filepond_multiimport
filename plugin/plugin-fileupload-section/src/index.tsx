@@ -15,15 +15,16 @@ import FilePondPluginFilePoster from "filepond-plugin-file-poster";
 import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
 import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
 import { FilePondErrorDescription, FilePondFile } from 'filepond';
+//import FilePondPluginImageResize from 'filepond-plugin-image-resize';
 
 // Register the plugin
 registerPlugin(FilePondPluginFileEncode);
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 registerPlugin(FilePondPluginFileValidateType);
 registerPlugin(FilePondPluginFilePoster);
+//registerPlugin(FilePondPluginImageResize);
 
 const apiurl = "ApiUrl";
-const apiloadurl = "ApiLoadUrl";
 const filterFileType = "FilterFileType";
 const invalidFileTypeMessage = "InvalidFileTypeMessage"
 const maxParallelUploads = "MaxParallelUploads"
@@ -243,6 +244,10 @@ export const FilePondComponent: React.FC<{
       return confirm("Are you sure you want to remove this file?");
   }
 
+  function handleClick(file: FilePondFile): void {
+    console.log("File clicked:", file.filename);
+  }
+
   return (
     <div className={S.mainContainer}>
       <div className={S.subContainer}>
@@ -258,7 +263,7 @@ export const FilePondComponent: React.FC<{
                    }
                }
                }
-               allowFilePoster={true}
+              allowFilePoster={true}
               allowFileTypeValidation={allowFileTypeValidation}
               acceptedFileTypes={[ftype]}
               labelFileTypeNotAllowed={props.invalidFileTypeMessage}
@@ -270,8 +275,9 @@ export const FilePondComponent: React.FC<{
                 setFiles(fileItems.map((f: FilePondFile) => f.file as File));
               }}
               onremovefile={(errRes, file) => handleRemove(errRes, file)}
+              onactivatefile={(file) => handleClick(file)}
               allowRevert={true}
-              allowDrop={false}
+              allowDrop={true}
               allowReorder={true}
               allowMultiple={true}
               onerror={(error: any) => {if(error.code == 401) {alert("Please logout and login again.")} else {alert(error.body)}}}
