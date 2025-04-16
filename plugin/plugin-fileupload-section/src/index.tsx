@@ -14,7 +14,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginFilePoster from "filepond-plugin-file-poster";
 import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
 import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
-import { FilePondFile } from 'filepond';
+import { FilePondErrorDescription, FilePondFile } from 'filepond';
 
 // Register the plugin
 registerPlugin(FilePondPluginFileEncode);
@@ -39,7 +39,6 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
   $type_ISectionPlugin: 1 = 1;
   id: string = ""
   apiurl: string = "" ;
-  apiloadurl: string = "" ;
   filterFileType: string | undefined;
   invalidFileTypeMessage: string | undefined;
   instantUpload:boolean | undefined;
@@ -51,7 +50,6 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
 
   initialize(xmlAttributes: { [key: string]: string }): void {
     this.apiurl = this.getXmlParameter(xmlAttributes, apiurl);
-    this.apiloadurl = this.getXmlParameter(xmlAttributes, apiloadurl);
     this.filterFileType = this.getXmlParameter(xmlAttributes, filterFileType);
     this.invalidFileTypeMessage = this.getXmlParameter(xmlAttributes, invalidFileTypeMessage);
     this.instantUpload = (this.getXmlParameter(xmlAttributes, instantUpload) =="true");
@@ -90,10 +88,11 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
       urlparam += "&category="+Category;
     }
     
-    var url = this.apiurl + urlparam
-    var loadurl = this.apiloadurl + urlparam
+    const importurl = this.apiurl + "/import" + urlparam
+    var loadurl = this.apiurl + "/load" + urlparam
+    var reverturl = this.apiurl + "/remove" 
 
-    return (<FilePondComponent fileType={this.filterFileType} apiurl={url} loadurl={loadurl} invalidFileTypeMessage={this.invalidFileTypeMessage} 
+    return (<FilePondComponent fileType={this.filterFileType} importurl={importurl} loadurl={loadurl} reverturl={reverturl} invalidFileTypeMessage={this.invalidFileTypeMessage} 
     instantUpload={this.instantUpload} maxParallelUploads={this.maxParallelUploads} />    );
   }
   
@@ -126,8 +125,9 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
 
 export const FilePondComponent: React.FC<{
   fileType:string | undefined;
-  apiurl:string;
+  importurl:string;
   loadurl:string;
+  reverturl:string;
   invalidFileTypeMessage:string | undefined
   instantUpload:boolean | undefined
   maxParallelUploads:number | undefined
@@ -189,7 +189,8 @@ export const FilePondComponent: React.FC<{
             type: "local",
             load: true,
             metadata: {
-              poster: posterDataURL
+              poster: posterDataURL,
+              id: attachment.Id
             },
             file: {
               id: attachment.Id,
@@ -211,6 +212,33 @@ export const FilePondComponent: React.FC<{
     fetchFiles();
   }, [props.loadurl]);
 
+  function handleRemove(errRes: FilePondErrorDescription | null, file: FilePondFile): void {
+    if (errRes) {
+      console.error("Error removing file:", errRes);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("fileId", file.getMetadata('id') as string);
+
+    fetch(props.reverturl, {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: getAuthorization(),
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to remove file: ${response.statusText}`);
+        }
+        console.log("File removed successfully");
+      })
+      .catch((error) => {
+        console.error("Error removing file:", error);
+      });
+  }
+
   return (
     <div className={S.mainContainer}>
       <div className={S.subContainer}>
@@ -219,7 +247,7 @@ export const FilePondComponent: React.FC<{
               server={
                 {
                    process: {
-                       url: props.apiurl,
+                       url: props.importurl,
                        headers: ({
                          Authorization: getAuthorization()
                        })
@@ -237,6 +265,7 @@ export const FilePondComponent: React.FC<{
               onupdatefiles={(fileItems: FilePondFile[]) => {
                 setFiles(fileItems.map((f: FilePondFile) => f.file as File));
               }}
+              onremovefile={(errRes, file) => handleRemove(errRes, file)}
               allowReorder={true}
               allowMultiple={true}
               onerror={(error: any) => {if(error.code == 401) {alert("Please logout and login again.")} else {alert(error.body)}}}
