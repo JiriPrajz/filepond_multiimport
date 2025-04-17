@@ -33,7 +33,7 @@ const instantUpload = "InstantUpload"
 export class FileUploadSectionPlugin implements ISectionPlugin {
   createLocalizer: ((localizations: ILocalization[]) => ILocalizer) | undefined;
   onSessionRefreshed(): void {
-    
+  
   }
   requestSessionRefresh: (() => Promise<any>) | undefined;
   setScreenParameters: ((parameters: { [key: string]: string; }) => void) | undefined;
@@ -66,7 +66,14 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
 
   getComponent(data: ISectionPluginData, createLocalizer: (localizations: ILocalization[]) => ILocalizer): JSX.Element {
     this.createLocalizer = createLocalizer;
-        if (!this.initialized) {
+    
+    var guiHelper = data.guiHelper;
+    if (guiHelper == undefined) {
+      throw new Error("GuiHelper was not found")
+    }
+    
+
+    if (!this.initialized) {
       return <></>;
     }
 
@@ -93,8 +100,15 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
     var loadurl = this.apiurl + "/load" + urlparam
     var reverturl = this.apiurl + "/remove" 
 
-    return (<FilePondComponent fileType={this.filterFileType} importurl={importurl} loadurl={loadurl} reverturl={reverturl} invalidFileTypeMessage={this.invalidFileTypeMessage} 
-    instantUpload={this.instantUpload} maxParallelUploads={this.maxParallelUploads} />    );
+    return (<FilePondComponent fileType={this.filterFileType} 
+                               importurl={importurl} 
+                               loadurl={loadurl} 
+                               reverturl={reverturl} 
+                               invalidFileTypeMessage={this.invalidFileTypeMessage} 
+                               instantUpload={this.instantUpload} 
+                               maxParallelUploads={this.maxParallelUploads}
+                               guiHelper={guiHelper} />    
+            );
   }
   
   getProperty(data: ISectionPluginData, propertyId: string) {
@@ -132,6 +146,7 @@ export const FilePondComponent: React.FC<{
   invalidFileTypeMessage:string | undefined
   instantUpload:boolean | undefined
   maxParallelUploads:number | undefined
+  guiHelper: any;
 
 }> = (props) => {
   var ftype: string = props.fileType ?? "";
@@ -241,7 +256,7 @@ export const FilePondComponent: React.FC<{
   }
 
   function beforeRemove(item: FilePondFile): boolean | Promise<boolean> {
-      return confirm("Are you sure you want to remove this file?");
+    return props.guiHelper.askYesNoQuestion("Remove File", "Are you sure you want to remove this file?");
   }
 
   function handleClick(file: FilePondFile): void {
