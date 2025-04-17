@@ -181,7 +181,9 @@ export const FilePondComponent: React.FC<{
   }
 
   function detectMimeFromBase64(base64: string): string | null {
-    const firstBytes = atob(base64.slice(0, 30)) // dekóduj první cca 30 znaků
+    var firstBytes = '';
+    try {
+       firstBytes = atob(base64.slice(0, 30)) // dekóduj první cca 30 znaků
       .split('')
       .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
       .join('')
@@ -198,6 +200,10 @@ export const FilePondComponent: React.FC<{
     if (firstBytes.startsWith('25504446')) return 'application/pdf';
     if (firstBytes.startsWith('504B0304')) return 'application/zip'; // často DOCX, XLSX, atd.
     return '';
+    } catch (e) {
+      console.error("Error decoding base64:", e);
+      return firstBytes;
+    }
   }
 
   useEffect(() => {
