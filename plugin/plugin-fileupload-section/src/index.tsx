@@ -104,6 +104,7 @@ export class FileUploadSectionPlugin implements ISectionPlugin {
                                importurl={importurl} 
                                loadurl={loadurl} 
                                reverturl={reverturl} 
+                               openurl={this.apiurl + "/open"}
                                invalidFileTypeMessage={this.invalidFileTypeMessage} 
                                instantUpload={this.instantUpload} 
                                maxParallelUploads={this.maxParallelUploads}
@@ -143,6 +144,7 @@ export const FilePondComponent: React.FC<{
   importurl:string;
   loadurl:string;
   reverturl:string;
+  openurl:string;
   invalidFileTypeMessage:string | undefined
   instantUpload:boolean | undefined
   maxParallelUploads:number | undefined
@@ -194,13 +196,13 @@ export const FilePondComponent: React.FC<{
         const responseData = await response.json();
         const attachments = responseData.ROOT.Attachment;
 
-        const initialFiles = attachments.map((attachment: { Id: any; FileName: any; Data: any }) => {
+        const initialFiles = attachments.map((attachment: { Id: any; FileName: any;  Thumbnail: any }) => {
         const mimeType = 'image/' + attachment.FileName.split('.').pop();
-        const blob = base64ToBlob(attachment.Data, mimeType);
-        const file = new File([blob], attachment.FileName, { type: mimeType });
-        const posterDataURL = "data:image/jpeg;base64," + attachment.Data;
+        //const blob = base64ToBlob(attachment.Data, mimeType);
+        //const file = new File([blob], attachment.FileName, { type: mimeType });
+        const posterDataURL = "data:image/jpeg;base64," + attachment.Thumbnail;
         return {
-          source: file,
+          source: attachment.Id,
           options: {
             type: "local",
             load: true,
@@ -211,10 +213,8 @@ export const FilePondComponent: React.FC<{
             file: {
               id: attachment.Id,
               name: attachment.FileName,
-              type: mimeType,
-              size: file.size,
-              data: attachment.Data
-            }
+              type: mimeType
+            },
           },
         };
       });
@@ -248,7 +248,6 @@ export const FilePondComponent: React.FC<{
         if (!response.ok) {
           throw new Error(`Failed to remove file: ${response.statusText}`);
         }
-        console.log("File removed successfully");
       })
       .catch((error) => {
         console.error("Error removing file:", error);
@@ -256,11 +255,20 @@ export const FilePondComponent: React.FC<{
   }
 
   function beforeRemove(item: FilePondFile): boolean | Promise<boolean> {
-    return props.guiHelper.askYesNoQuestion("Remove File", "Are you sure you want to remove this file?");
+    if (item.getMetadata('id') == undefined) {
+      console.error("File ID not found in metadata.");
+      return false;
+    }
+    return props.guiHelper.askYesNoQuestion(item.filename, "Are you sure you want to remove this file?");
   }
 
   function handleClick(file: FilePondFile): void {
     console.log("File clicked:", file.filename);
+    if (file.getMetadata('id') == undefined) {
+      console.error("File ID not found in metadata.");
+      return;
+    }
+    window.open(props.openurl + "?itemid=" + file.getMetadata('id'), '_blank');
   }
 
   return (
@@ -279,6 +287,7 @@ export const FilePondComponent: React.FC<{
                }
                }
               allowFilePoster={true}
+              filePosterMaxHeight={150}
               allowFileTypeValidation={allowFileTypeValidation}
               acceptedFileTypes={[ftype]}
               labelFileTypeNotAllowed={props.invalidFileTypeMessage}
