@@ -180,6 +180,26 @@ export const FilePondComponent: React.FC<{
     return new Blob([byteArray], { type: mimeType });
   }
 
+  function detectMimeFromBase64(base64: string): string | null {
+    const firstBytes = atob(base64.slice(0, 30)) // dekóduj první cca 30 znaků
+      .split('')
+      .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
+      .join('')
+      .toUpperCase();
+
+    // Známe magic bytes
+    if (firstBytes.startsWith('FFD8FF')) return 'image/jpeg';
+    if (firstBytes.startsWith('52494646')) return 'image/webp'; // WEBP
+    if (firstBytes.startsWith('424D')) return 'image/bmp'; // BMP
+    if (firstBytes.startsWith('49492A00')) return 'image/tiff'; // TIFF
+    if (firstBytes.startsWith('4D4D002A')) return 'image/tiff'; // TIFF
+    if (firstBytes.startsWith('89504E47')) return 'image/png';
+    if (firstBytes.startsWith('47494638')) return 'image/gif';
+    if (firstBytes.startsWith('25504446')) return 'application/pdf';
+    if (firstBytes.startsWith('504B0304')) return 'application/zip'; // často DOCX, XLSX, atd.
+    return '';
+  }
+
   useEffect(() => {
     async function fetchFiles() {
       try {
@@ -197,10 +217,9 @@ export const FilePondComponent: React.FC<{
         const attachments = responseData.ROOT.Attachment;
 
         const initialFiles = attachments.map((attachment: { Id: any; FileName: any;  Thumbnail: any }) => {
-        const mimeType = 'image/' + attachment.FileName.split('.').pop();
-        //const blob = base64ToBlob(attachment.Data, mimeType);
-        //const file = new File([blob], attachment.FileName, { type: mimeType });
-        const posterDataURL = "data:image/jpeg;base64," + attachment.Thumbnail;
+        const ext = attachment.FileName.split('\\.').pop();
+        const mimeType = detectMimeFromBase64(attachment.Thumbnail) ?? ext;
+        const posterDataURL = "data:${mimeType};base64," + attachment.Thumbnail;
         return {
           source: attachment.Id,
           options: {
