@@ -168,22 +168,9 @@ export const FilePondComponent: React.FC<{
     return "";
   }
 
-  function base64ToBlob(base64: string, mimeType: string): Blob {
-    const byteCharacters = atob(base64);
-    const byteNumbers = new Array(byteCharacters.length);
-  
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-  
-    const byteArray = new Uint8Array(byteNumbers);
-    return new Blob([byteArray], { type: mimeType });
-  }
-
   function detectMimeFromBase64(base64: string): string | null {
-    var firstBytes = '';
     try {
-       firstBytes = atob(base64.slice(0, 30)) // dekóduj první cca 30 znaků
+       const firstBytes = atob(base64.slice(0, 30)) // dekóduj první cca 30 znaků
       .split('')
       .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
       .join('')
@@ -199,11 +186,13 @@ export const FilePondComponent: React.FC<{
     if (firstBytes.startsWith('47494638')) return 'image/gif';
     if (firstBytes.startsWith('25504446')) return 'application/pdf';
     if (firstBytes.startsWith('504B0304')) return 'application/zip'; // často DOCX, XLSX, atd.
-    return '';
-    } catch (e) {
-      console.error("Error decoding base64:", e);
-      return firstBytes;
-    }
+    if (firstBytes.startsWith('7B5C727466')) return 'application/rtf'; // RTF
+    if (firstBytes.startsWith('D0CF11E0')) return 'application/vnd.ms-office'; // OLE2, často DOC, XLS, atd.
+    if (firstBytes.startsWith('504B0304')) return 'application/zip'; // DOCX, XLSX, atd.
+    if (firstBytes.startsWith('3C3F786D6C')) return 'application/xml'; // XML
+    if (firstBytes.startsWith('3C68746D6C')) return 'text/html'; // HTML
+    } catch {}
+    return ""
   }
 
   useEffect(() => {
@@ -233,10 +222,9 @@ export const FilePondComponent: React.FC<{
             load: true,
             metadata: {
               poster: posterDataURL,
-              id: attachment.Id
             },
             file: {
-              id: attachment.Id,
+              serverid: attachment.Id,
               name: attachment.FileName,
               type: mimeType
             },
@@ -260,7 +248,7 @@ export const FilePondComponent: React.FC<{
     }
 
     const formData = new FormData();
-    formData.append("fileId", file.getMetadata('id') as string);
+    formData.append("fileId", file.serverId as string);
 
     fetch(props.reverturl, {
       method: "POST",
@@ -280,19 +268,11 @@ export const FilePondComponent: React.FC<{
   }
 
   function beforeRemove(item: FilePondFile): boolean | Promise<boolean> {
-    if (item.getMetadata('id') == undefined) {
-      console.error("File ID not found in metadata.");
-      return false;
-    }
     return props.guiHelper.askYesNoQuestion(item.filename, "Are you sure you want to remove this file?");
   }
 
   function handleClick(file: FilePondFile): void {
-    console.log("File clicked:", file.filename);
-    if (file.getMetadata('id') == undefined) {
-        file.setMetadata('id', file.id);
-    }
-    window.open(props.openurl + "?itemid=" + file.getMetadata('id'), '_blank');
+    window.open(props.openurl + "/" + file.serverId, '_blank');
   }
 
   function parseResponse(responseText: string) {
@@ -300,7 +280,6 @@ export const FilePondComponent: React.FC<{
     {
       return JSON.parse(responseText);
     } catch (e) {
-      console.error("Error parsing response:", e);
       return { ROOT: { Attachment: { Id: responseText } } };
     }
   }
@@ -314,6 +293,7 @@ export const FilePondComponent: React.FC<{
                 {
                   process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => 
                     {
+                    
                     const formData = new FormData();
                     formData.append(fieldName, file);
                     const xhr = new XMLHttpRequest();
@@ -360,14 +340,8 @@ export const FilePondComponent: React.FC<{
                     }
                     xhr.send(formData);
                   }
-               }}
-              onprocessfile={(error, file) => {
-                if (error) return;
-                const documentId = file.serverId;
-                if (file.getMetadata('id') == undefined) {
-                  file.setMetadata('id', documentId); 
-                }
-              }}
+               }}    
+              
               allowFilePoster={true}
               filePosterMaxHeight={150}
               allowFileTypeValidation={allowFileTypeValidation}
