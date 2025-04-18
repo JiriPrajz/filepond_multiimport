@@ -290,10 +290,19 @@ export const FilePondComponent: React.FC<{
   function handleClick(file: FilePondFile): void {
     console.log("File clicked:", file.filename);
     if (file.getMetadata('id') == undefined) {
-      console.error("File ID not found in metadata.");
-      return;
+        file.setMetadata('id', file.id);
     }
     window.open(props.openurl + "?itemid=" + file.getMetadata('id'), '_blank');
+  }
+
+  function parseResponse(responseText: string) {
+    try
+    {
+      return JSON.parse(responseText);
+    } catch (e) {
+      console.error("Error parsing response:", e);
+      return { ROOT: { Attachment: { Id: responseText } } };
+    }
   }
 
   return (
@@ -303,14 +312,62 @@ export const FilePondComponent: React.FC<{
            <FilePond beforeRemoveFile={beforeRemove}
               server={
                 {
-                   process: {
-                       url: props.importurl,
-                       headers: ({
-                         Authorization: getAuthorization()
-                       })
-                   }
-               }
-               }
+                  process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => 
+                    {
+                    const formData = new FormData();
+                    formData.append(fieldName, file);
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", props.importurl, true);
+                    xhr.setRequestHeader("Authorization", getAuthorization());
+                    xhr.upload.onprogress = (e) => {
+                      progress(true, e.lengthComputable ? e.loaded / e.total : 0, e.loaded);
+                    };
+                    xhr.onload = () => {
+                      if (xhr.status >= 200 && xhr.status < 300) {
+                        const responseData = parseResponse(xhr.responseText);
+                        load(responseData.ROOT.Attachment.Id);
+                      } else if (xhr.status === 301 || xhr.status === 302) {
+                        // Handle redirects
+                        const locationHeader = xhr.getResponseHeader("Location");
+                        if (locationHeader) {
+                          xhr.open("GET", locationHeader, true);
+                        } else {
+                          error("Location header is missing.");
+                        }
+                        xhr.setRequestHeader("Authorization", getAuthorization());
+                        xhr.onload = () => {
+                          if (xhr.status >= 200 && xhr.status < 300) {
+                            const responseData = parseResponse(xhr.responseText);
+                            load(responseData.ROOT.Attachment.Id);
+                          } else {
+                            error(`Failed to upload file: ${xhr.statusText}`);
+                          }
+                        };
+                        const responseData = parseResponse(xhr.responseText);
+                        load(responseData.ROOT.Attachment.Id);
+                      } else {
+                        error(`Failed to upload file: ${xhr.statusText}`);
+                      }
+                    };
+                    xhr.onerror = () => {
+                      error("An error occurred during the upload.");
+                    };
+                    xhr.onabort = () => {
+                      abort();
+                    };
+                    xhr.ontimeout = () => {
+                      error("The upload timed out.");
+                    }
+                    xhr.send(formData);
+                  }
+               }}
+              onprocessfile={(error, file) => {
+                if (error) return;
+                const documentId = file.serverId;
+                if (file.getMetadata('id') == undefined) {
+                  file.setMetadata('id', documentId); 
+                }
+              }}
               allowFilePoster={true}
               filePosterMaxHeight={150}
               allowFileTypeValidation={allowFileTypeValidation}
